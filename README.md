@@ -17,7 +17,7 @@
 
 ### 📖 About
 
-Welcome! This repository contains a collection of Skript scripts that I'm sharing with the community. Feel free to use, modify, and adapt these scripts to fit your server's needs.
+Welcome ! This repository contains a collection of Skript scripts that I'm sharing with the community. Feel free to use, modify, and adapt these scripts to fit your server's needs.
 
 ### ⚖️ Terms of Use
 
