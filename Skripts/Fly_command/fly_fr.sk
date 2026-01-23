@@ -1,0 +1,48 @@
+# ==================================================
+# Script réalisé par Spiralyfox
+# Discord : @Spiralyfox
+# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Contactez-moi sur Discord pour contribuer à la communauté.
+# ==================================================
+
+options:
+    # ==================================================
+    # Général
+    # ==================================================
+    prefix: &b[Server name] &8» &r
+
+    # ==================================================
+    # Permissions
+    # ==================================================
+    perm_fly: spiralyskript.fly.fly
+
+    # ==================================================
+    # Messages
+    # ==================================================
+    msg_fly_enable: &aVous pouvez maintenant voler.
+    msg_fly_disable: &cLe mode de vol est désactivé.
+    msg_no_fall: &ePas de dégâts de chute car le mode de vol est activé.
+
+command /fly:
+    permission: {@perm_fly}
+    trigger:
+        if {fly-%player's uuid%} is not set:
+            send "{@prefix}{@msg_fly_enable}" to player
+            set player's flight mode to true
+            set {fly-%player's uuid%} to true
+        else:
+            send "{@prefix}{@msg_fly_disable}" to player
+            set player's flight mode to false
+            delete {fly-%player's uuid%}
+
+on damage:
+    damage cause is fall
+    victim is a player
+    if {fly-%victim's uuid%} is set:
+        cancel event
+        send "{@prefix}{@msg_no_fall}" to victim
+
+on quit:
+    if {fly-%player's uuid%} is set:
+        set player's flight mode to false
+        delete {fly-%player's uuid%}
