@@ -2,7 +2,7 @@
 
 ---
 
-## 🇫🇷 FR
+## Français
 
 ### 🔹 Description
 Ce Skript permet au joueur de lancer un feu d’artifice aléatoire via la commande `/fire`.
@@ -33,7 +33,7 @@ Ce Skript permet au joueur de lancer un feu d’artifice aléatoire via la comma
 
 ---
 
-## 🇬🇧 EN
+## English
 
 ### 🔹 Description
 This Skript allows players to launch a random firework using the `/fire` command.
