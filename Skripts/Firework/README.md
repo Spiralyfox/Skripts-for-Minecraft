@@ -1,53 +1,63 @@
-## 🔥 Firework / Feu d’artifice
+# Firework / Feu d’artifice
 
-### FR
+## FR
 
+### Description
 Ce Skript permet au joueur de lancer un feu d’artifice aléatoire via la commande `/fire`.
 
-#### Commandes
-- `/fire` : lance un feu d’artifice aléatoire
+### Commande
+| Commande | Effet |
+|----------|-------|
+| `/fire`  | Lance un feu d’artifice aléatoire |
 
-#### Permissions
-- `spiralyskript.firework.fire` : permission pour utiliser la commande
-- `spiralyskript.firework.bypasscooldown` : permission pour bypass le cooldown
+### Permissions
+| Permission | Description |
+|------------|-------------|
+| `spiralyskript.firework.fire` | Autorise l’utilisation de la commande |
+| `spiralyskript.firework.bypasscooldown` | Permet de bypass le cooldown |
 
-#### Options modifiables
-Dans le fichier Skript (section `options`) :
-- `prefix` : préfixe affiché dans les messages
-- `cooldown` : temps de cooldown
-- `msg_cooldown` : message en cas de cooldown
-- `msg_fire` : message après lancement du feu d’artifice
+### Options modifiables
+| Option | Valeur par défaut | Description |
+|--------|------------------|-------------|
+| `prefix` | `&b[Server name] &8» &r` | Préfixe affiché dans les messages |
+| `cooldown` | `5 seconds` | Temps de cooldown |
+| `msg_cooldown` | `&cVous allez trop vite !` | Message affiché quand le joueur est en cooldown |
+| `msg_fire` | `&6Que de belles couleurs !` | Message affiché après le feu d’artifice |
 
-# ==================================================
-# Script réalisé par Spiralyfox
-# Discord : @Spiralyfox
-# Des idées de Skripts ? Besoin d’un script spécifique ?
-# Contactez-moi sur Discord pour contribuer à la communauté.
-# ==================================================
+|  |  |
+|---|---|
+| **Script réalisé par** | Spiralyfox |
+| **Discord** | @Spiralyfox |
+| **Des idées de Skripts ?** | Propose ton idée sur Discord |
 
 ---
 
-### EN
+## EN
 
+### Description
 This Skript allows players to launch a random firework using the `/fire` command.
 
-#### Commands
-- `/fire` : launches a random firework
+### Commands
+| Command | Effect |
+|---------|--------|
+| `/fire` | Launches a random firework |
 
-#### Permissions
-- `spiralyskript.firework.fire` : permission to use the command
-- `spiralyskript.firework.bypasscooldown` : permission to bypass cooldown
+### Permissions
+| Permission | Description |
+|------------|-------------|
+| `spiralyskript.firework.fire` | Allows the use of the command |
+| `spiralyskript.firework.bypasscooldown` | Allows bypassing the cooldown |
 
-#### Configurable options
-In the Skript file (under `options`) :
-- `prefix` : prefix shown in messages
-- `cooldown` : cooldown time
-- `msg_cooldown` : message when on cooldown
-- `msg_fire` : message after launching the firework
+### Configurable options
+| Option | Default value | Description |
+|--------|---------------|-------------|
+| `prefix` | `&b[Server name] &8» &r` | Prefix shown in messages |
+| `cooldown` | `5 seconds` | Cooldown time |
+| `msg_cooldown` | `&cYou are going too fast !` | Message shown when player is on cooldown |
+| `msg_fire` | `&6What a beautiful set of colors !` | Message shown after launching the firework |
 
-# ==================================================
-# Script made by Spiralyfox
-# Discord : @Spiralyfox
-# Script ideas ? Need a specific Skript ?
-# Contact me on Discord to contribute to the community.
-# ==================================================
+|  |  |
+|---|---|
+| **Script made by** | Spiralyfox |
+| **Discord** | @Spiralyfox |
+| **Need a Skript ?** | Propose your idea on Discord |
