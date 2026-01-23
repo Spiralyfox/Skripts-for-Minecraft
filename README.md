@@ -163,6 +163,6 @@ Ces scripts sont conçus pour :
 
 ## 📄 License
 
-This project is provided as-is for free use with the restrictions mentioned above. No warranty is provided.
+This project is provided as-is for free use with the restrictions mentioned above.
 
 **Made with ❤️ for the Minecraft Skript community**
