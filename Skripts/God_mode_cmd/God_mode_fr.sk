@@ -1,0 +1,37 @@
+# ==================================================
+# Script réalisé par Spiralyfox
+# Discord : @Spiralyfox
+# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Contactez-moi sur Discord pour contribuer à la communauté.
+# ==================================================
+
+options:
+    # ==================================================
+    # Général
+    # ==================================================
+    prefix: &b[Server name] &8» &r
+
+    # ==================================================
+    # Permissions
+    # ==================================================
+    perm_god: spiralyskript.god.god
+
+    # ==================================================
+    # Messages
+    # ==================================================
+    msg_god_on: &aLe mode &bgod &aest maintenant activé. Vous êtes invincible !
+    msg_god_off: &cLe mode &bgod &ca été désactivé. Vous n'êtes plus invincible.
+
+command /god:
+    permission: {@perm_god}
+    trigger:
+        if {god-mode-%player's uuid%} is not set:
+            set {god-mode-%player's uuid%} to true
+            send "{@prefix}{@msg_god_on}" to player
+        else:
+            delete {god-mode-%player's uuid%}
+            send "{@prefix}{@msg_god_off}" to player
+
+on damage of player:
+    if {god-mode-%victim's uuid%} is set:
+        cancel event
