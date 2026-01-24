@@ -1,7 +1,7 @@
 # ==================================================
 # Script réalisé par Spiralyfox
 # Discord : @Spiralyfox
-# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Des idées de Skripts ? Besoin d'un script spécifique ?
 # Contactez-moi sur Discord pour contribuer à la communauté.
 # ==================================================
 
@@ -53,27 +53,26 @@ command /back:
 
             make gui slot 2 with paper named "&bVoir les coordonnées" with lore {_coords}
 
-            if player has permission {@perm_back_bypass}:
+            if player has permission "{@perm_back_bypass}":
                 make gui slot 6 with ender pearl named "&aTéléportation" with lore "&7Cliquez pour vous téléporter à%nl%&7votre dernier emplacement de mort":
                     teleport player to {death-location.%player's uuid%}
                     send "{@prefix}{@msg_tp_success}"
+            else if {back-cooldown.%player's uuid%} is set:
+                set {_cooldown_time} to {back-cooldown.%player's uuid%}
+                make gui slot 4 with red wool named "&cTéléportation indisponible" with lore "&7Temps restant : %{_cooldown_time}% secondes."
             else:
-                if {back-cooldown.%player's uuid%} is set:
-                    set {_cooldown_time} to {back-cooldown.%player's uuid%}
-                    make gui slot 4 with red wool named "&cTéléportation indisponible" with lore "&7Temps restant : %{_cooldown_time}% secondes."
-                else:
-                    make gui slot 4 with green wool named "&aTéléportation disponible" with lore "&7Cliquez pour vous téléporter à%nl%&7votre dernier emplacement de mort":
-                        set {back-cooldown.%player's uuid%} to {@back_cooldown}
-                        teleport player to {death-location.%player's uuid%}
-                        send "{@prefix}{@msg_tp_success}"
-                        loop 700 times:
-                            if {back-cooldown.%player's uuid%} is set:
-                                if {back-cooldown.%player's uuid%} < 1:
-                                    delete {back-cooldown.%player's uuid%}
-                                    stop
-                                else:
-                                    subtract 1 from {back-cooldown.%player's uuid%}
-                                    wait 1 second
+                make gui slot 4 with green wool named "&aTéléportation disponible" with lore "&7Cliquez pour vous téléporter à%nl%&7votre dernier emplacement de mort":
+                    set {back-cooldown.%player's uuid%} to {@back_cooldown}
+                    teleport player to {death-location.%player's uuid%}
+                    send "{@prefix}{@msg_tp_success}"
+                    loop 700 times:
+                        if {back-cooldown.%player's uuid%} is set:
+                            if {back-cooldown.%player's uuid%} < 1:
+                                delete {back-cooldown.%player's uuid%}
+                                stop
+                            else:
+                                subtract 1 from {back-cooldown.%player's uuid%}
+                                wait 1 second
 
                 make gui slot 6 with diamond named "&bDonateur" with lore "&aAvec le grade &6Donateur&a, vous%nl%&apouvez utiliser &2/back%nl%&asans condition de temps."
 

@@ -304,7 +304,7 @@ on rightclick on chest or shulker box or barrel or hopper:
 on break of chest or shulker box or barrel or hopper:
     if {chest-protected::%location of event-block%} is set:
         if {chest-owner::%location of event-block%} is not player's uuid:
-            if player has permission {@perm_breakcontainer}:
+            if player has permission "{@perm_breakcontainer}":
                 delete {chest-owner::%location of event-block%}
                 delete {chest-protected::%location of event-block%}
                 delete {chest-access::%location of event-block%::*}
@@ -325,11 +325,11 @@ on break of chest or shulker box or barrel or hopper:
     else:
         if {chest-owner::%location of event-block%} is player's uuid:
             delete {chest-owner::%location of event-block%}
-        if player has permission {@perm_breakcontainer}:
+        if player has permission "{@perm_breakcontainer}":
             delete {chest-owner::%location of event-block%}
 
 on place of chest or hopper:
-    if player has permission {@perm_chest}:
+    if player has permission "{@perm_chest}":
         stop
     loop blocks in radius 1 around event-block:
         if loop-block is chest or shulker box or barrel or hopper:

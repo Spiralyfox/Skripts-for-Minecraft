@@ -1,7 +1,7 @@
 # ==================================================
 # Script réalisé par Spiralyfox
 # Discord : @Spiralyfox
-# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Des idées de Skripts ? Besoin d'un script spécifique ?
 # Contactez-moi sur Discord pour contribuer à la communauté.
 # ==================================================
 
@@ -43,4 +43,4 @@ command /fire:
         else if {_random} = 5:
             launch ball large coloured white, orange, lime, blue, cyan and pink fading to red, purple, yellow, green, magenta and light blue at player's location with duration 2
 
-        send {@prefix}{@msg_fire}
+        send "{@prefix}{@msg_fire}"
