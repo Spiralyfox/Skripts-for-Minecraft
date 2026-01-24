@@ -1,0 +1,107 @@
+# ==================================================
+# Script réalisé par Spiralyfox
+# Discord : @Spiralyfox
+# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Contactez-moi sur Discord pour contribuer à la communauté.
+# ==================================================
+
+options:
+    # ==================================================
+    # Général
+    # ==================================================
+    prefix: &b[Server name] &8» &r
+    gui_name: &9Retour à l'emplacement de mort
+
+    # ==================================================
+    # Cooldown
+    # ==================================================
+    back_cooldown: 240
+
+    # ==================================================
+    # Messages
+    # ==================================================
+    msg_no_death: &7Aucune mort récente
+    msg_death_info: &7Dernière mort :%nl%&a%{_world}%%nl%&7- &aX: %{_x}%%nl%&7- &aY: %{_y}%%nl%&7- &aZ: %{_z}%
+    msg_tp_success: &aVous avez été téléporté à votre dernier emplacement de mort.
+    msg_death_notify: &7Vous pouvez utiliser &a/back &7pour retourner à votre dernier emplacement de mort.
+    msg_no_player: &cVous devez spécifier le nom d'un joueur.
+    msg_no_death_player: &cLe joueur %arg-1% n'a pas de dernier emplacement de mort enregistré.
+    msg_tp_player: &aVous avez été téléporté à la dernière position de mort de %arg-1%.
+
+    # ==================================================
+    # Permissions
+    # ==================================================
+    perm_back: spiralyskript.back.back
+    perm_back_bypass: spiralyskript.back.bypass
+    perm_backplayer: spiralyskript.back.backplayer
+
+command /back:
+    permission: {@perm_back}
+    trigger:
+        create a gui with virtual chest inventory with 1 row named "{@gui_name}":
+            make gui slot (integers from 0 to 8) with gray stained glass pane named "&a"
+
+            if {death-location.%player's uuid%} is not set:
+                set {_coords} to "{@msg_no_death}"
+            else:
+                set {_location} to {death-location.%player's uuid%}
+                set {_world} to world of {_location}
+                set {_x} to x-coordinate of {_location}
+                set {_y} to y-coordinate of {_location}
+                set {_z} to z-coordinate of {_location}
+                set {_coords} to "{@msg_death_info}"
+
+            make gui slot 2 with paper named "&bVoir les coordonnées" with lore {_coords}
+
+            if player has permission {@perm_back_bypass}:
+                make gui slot 6 with ender pearl named "&aTéléportation" with lore "&7Cliquez pour vous téléporter à%nl%&7votre dernier emplacement de mort":
+                    teleport player to {death-location.%player's uuid%}
+                    send "{@prefix}{@msg_tp_success}"
+            else:
+                if {back-cooldown.%player's uuid%} is set:
+                    set {_cooldown_time} to {back-cooldown.%player's uuid%}
+                    make gui slot 4 with red wool named "&cTéléportation indisponible" with lore "&7Temps restant : %{_cooldown_time}% secondes."
+                else:
+                    make gui slot 4 with green wool named "&aTéléportation disponible" with lore "&7Cliquez pour vous téléporter à%nl%&7votre dernier emplacement de mort":
+                        set {back-cooldown.%player's uuid%} to {@back_cooldown}
+                        teleport player to {death-location.%player's uuid%}
+                        send "{@prefix}{@msg_tp_success}"
+                        loop 700 times:
+                            if {back-cooldown.%player's uuid%} is set:
+                                if {back-cooldown.%player's uuid%} < 1:
+                                    delete {back-cooldown.%player's uuid%}
+                                    stop
+                                else:
+                                    subtract 1 from {back-cooldown.%player's uuid%}
+                                    wait 1 second
+
+                make gui slot 6 with diamond named "&bDonateur" with lore "&aAvec le grade &6Donateur&a, vous%nl%&apouvez utiliser &2/back%nl%&asans condition de temps."
+
+        open last created gui to player
+
+on inventory click:
+    if name of event-inventory is "{@gui_name}":
+        cancel event
+
+on death of player:
+    set {death-location.%victim's uuid%} to location of victim
+    send "{@prefix}{@msg_death_notify}" to victim
+
+command /backplayer <offlineplayer>:
+    permission: {@perm_backplayer}
+    usage: {@prefix}Pour vous téléporter à l'emplacement de mort d'un joueur, utilisez &a/backplayer <nom du joueur>&r.
+    trigger:
+        if arg-1 is not set:
+            send "{@prefix}{@msg_no_player}"
+        else if {death-location.%arg-1's uuid%} is not set:
+            send "{@prefix}{@msg_no_death_player}"
+        else:
+            teleport player to {death-location.%arg-1's uuid%}
+            send "{@prefix}{@msg_tp_player}"
+
+on tab complete:
+    event-string is "/backplayer"
+    loop all offline players:
+        if {death-location.%loop-offline player's uuid%} is set:
+            add loop-offline player to {_players-with-death-locations::*}
+    set tab completions for position 1 to {_players-with-death-locations::*}
