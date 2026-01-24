@@ -1,0 +1,77 @@
+# ==================================================
+# Script réalisé par Spiralyfox
+# Discord : @Spiralyfox
+# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Contactez-moi sur Discord pour contribuer à la communauté.
+# ==================================================
+
+options:
+    # ==================================================
+    # Messages
+    # ==================================================
+    unsetafk: &aVotre mode &bAFK &aa été désactivé suite à une action.
+    kickafk: &b&lAnti AFK&r%nl%%nl%&c&m                                        &r%nl%&cVous avez été exclu pour &a&linactivité&c. Pour &b&lAFK&c, veuillez faire &a&l/afk&c.%nl%&m                                        &r%nl%&cSachez que taper des entités ne permez pas de garder le mode &a&lafk&c.%nl%&m                                        &r%nl%&cLe mode &b&lAFK &cest réservé aux fermes totalement automatiques.%nl%&m                                        &r%nl%&cUn &a&lAutoclic&c ou une &a&lMacro&c conduira à un bannissement.%nl%&m                                        &r
+    prefix: &cAFK [Server name] &8» &r
+
+    # ==================================================
+    # Durée
+    # ==================================================
+    timeafk: 600
+
+    # ==================================================
+    # Permissions
+    # ==================================================
+    perm_afk_bypass: spiralyskript.antiafk.bypass
+    perm_afk_use: spiralyskript.antiafk.use
+
+on load:
+    set {timeafk} to {@timeafk}
+
+on player move:
+    if {afk-%player's uuid%} is true:
+        delete {afk-%player's uuid%}
+        send "{@prefix}{@unsetafk}"
+    else:
+        set {afk-kicktime-%player's uuid%} to 0
+
+on rightclick:
+    if {afk-%player's uuid%} is true:
+        delete {afk-%player's uuid%}
+        send "{@prefix}{@unsetafk}" to event-player
+        set {afk-kicktime-%player's uuid%} to 0
+
+on leftclick:
+    if {afk-%player's uuid%} is true:
+        delete {afk-%player's uuid%}
+        send "{@prefix}{@unsetafk}" to event-player
+        set {afk-kicktime-%player's uuid%} to 0
+
+every 1 second:
+    loop all players:
+        if loop-player has permission {@perm_afk_bypass}:
+            stop
+        if {afk-%loop-player's uuid%} is not set:
+            add 1 to {afk-kicktime-%loop-player's uuid%}
+            if {afk-%loop-player's uuid%} is not set:
+                if {afk-kicktime-%loop-player's uuid%} = ({timeafk} - 30):
+                    send "{@prefix}&aAvertissement : bougez ou vous serez exclu pour inactivité dans &a30 &asecondes. Utilisez &b/afk&a pour rester AFK en ligne sur le serveur." to loop-player
+                if {afk-kicktime-%loop-player's uuid%} > {timeafk}:
+                    if {battle-%loop-player's uuid%-in} is not set:
+                        kick loop-player due to "{@kickafk}"
+
+on leave:
+    delete {afk-kicktime-%player's uuid%}
+    delete {afk-%player's uuid%}
+
+command /afk:
+    trigger:
+        if {afk-%player's uuid%} is not set:
+            set {afk-%player's uuid%} to true
+            send "{@prefix}&aVous avez &dactivé&a le mode &bAFK&a."
+        else:
+            delete {afk-%player's uuid%}
+            send "{@prefix}&aVous avez &ddésactivé&a le mode &bAFK&a."
+
+on damage:
+    if {afk-%victim's uuid%} is set:
+        cancel event
