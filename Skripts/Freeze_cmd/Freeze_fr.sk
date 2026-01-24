@@ -1,0 +1,32 @@
+# ==================================================
+# Script réalisé par Spiralyfox
+# Discord : @Spiralyfox
+# Des idées de Skripts ? Besoin d’un script spécifique ?
+# Contactez-moi sur Discord pour contribuer à la communauté.
+# ==================================================
+
+options:
+    # ==================================================
+    # Général
+    # ==================================================
+    prefix: &b[Server name] &8» &r
+
+    # ==================================================
+    # Permissions
+    # ==================================================
+    perm_freeze: spiralyskript.freeze.freeze
+
+command /freeze <offline player>:
+    permission: {@perm_freeze}
+    trigger:
+        if {freeze-%arg-1's uuid%} is not set:
+            set {freeze-%arg-1's uuid%} to true
+            send "{@prefix}Le joueur &b%arg-1%&f a été gelé." to executor
+        else:
+            delete {freeze-%arg-1's uuid%}
+            send "{@prefix}Le joueur &b%arg-1%&f a été dégelé." to executor
+
+on player move:
+    if {freeze-%event-player's uuid%} is set:
+        cancel event
+        send "{@prefix}&cVous avez été Freeze par la modération." to event-player
